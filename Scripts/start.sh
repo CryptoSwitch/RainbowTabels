@@ -1,0 +1,1 @@
+java -server -d64 -XX:ParallelGCThreads=4 -Xms1G -Xmx6G -jar RainbowTabel.jar
