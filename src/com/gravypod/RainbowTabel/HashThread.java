@@ -87,7 +87,7 @@ public class HashThread extends Thread {
 					finalHashedText = "0" + finalHashedText;
 				}
 				
-				RainbowTable.getFileHandle().print(org.apache.commons.lang3.StringEscapeUtils.escapeHtml4(string) + " " + finalHashedText);
+				RainbowTable.getFileHandle().print(org.apache.commons.lang.StringEscapeUtils.escapeSql(string) + " " + finalHashedText);
 				wordsMade++;
 			}
 			
