@@ -22,7 +22,7 @@ public class HashThread extends Thread {
 	MessageDigest messageDigest = null;
 	
 	long startTime;
-
+	
 	int wordsMade;
 	
 	public HashThread() {
@@ -87,8 +87,9 @@ public class HashThread extends Thread {
 					finalHashedText = "0" + finalHashedText;
 				}
 				
-				RainbowTable.getFileHandle().print(org.apache.commons.lang.StringEscapeUtils.escapeSql(string) + " " + finalHashedText);
+				RainbowTable.getFileHandle().print(string + " " + finalHashedText);
 				wordsMade++;
+				
 			}
 			
 		} while (!RainbowTable.isDone() || QueueClass.hasContent());
