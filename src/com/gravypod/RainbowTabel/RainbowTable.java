@@ -15,6 +15,8 @@ public class RainbowTable {
 	
 	private static boolean isDone;
 	
+	private static FileHandle fileHandle;
+	
 	/**
 	 * Main field. You do not need to have anything in args
 	 * 
@@ -45,6 +47,8 @@ public class RainbowTable {
 		} catch (Exception e) {
 			min = 6;
 		}
+		
+		fileHandle = new FileHandle();
 		
 		BruteForce.run(min, max, startFrom);
 		
@@ -78,5 +82,13 @@ public class RainbowTable {
 	
 		RainbowTable.isDone = isDone;
 	}
+
+	/**
+	 * @return the fileHandle
+	 */
+	public static FileHandle getFileHandle() {
 	
+		return fileHandle;
+	}
+
 }

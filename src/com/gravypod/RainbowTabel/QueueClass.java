@@ -6,7 +6,7 @@ import java.util.concurrent.BlockingQueue;
 
 public class QueueClass {
 	
-	private static final BlockingQueue<String> strings = new ArrayBlockingQueue<String>(1024);
+	public static final BlockingQueue<String> strings = new ArrayBlockingQueue<String>(1024);
 	
 	/**
 	 * Take out all current strings from the BlockingQueue.

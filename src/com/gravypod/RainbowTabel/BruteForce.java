@@ -11,6 +11,8 @@ public class BruteForce {
 	
 	static boolean startedThread = false;
 	
+	static int threadsMade = 0;
+	
 	public static int wordsMade = 0;
 	
 	/**
@@ -35,7 +37,7 @@ public class BruteForce {
 			RainbowTable.setDone(false);
 			
 			if (startFrom == null || (startFrom.length() <= charLen))
-				new MakeWords(charLen, (charLen < max ? true : false), startFrom).run();
+				new MakeWords(charLen, (charLen < max ? true : false), startFrom).start();
 			
 		}
 		
@@ -51,8 +53,9 @@ public class BruteForce {
 	
 		QueueClass.put(s);
 		
-		if (!startedThread) {
+		if ((QueueClass.strings.size() >= 800) && !(threadsMade > 20)) {
 			RainbowTable.startHashing();
+			++threadsMade;
 			startedThread = true;
 		}
 		
@@ -67,6 +70,13 @@ public class BruteForce {
 	
 		action(s);
 		wordsMade++;
+		
+	}
+	
+	public static synchronized void removeThread() {
+		
+		--threadsMade;
+		
 	}
 	
 	/**

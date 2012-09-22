@@ -1,8 +1,5 @@
 package com.gravypod.RainbowTabel;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -16,8 +13,6 @@ import java.util.ArrayList;
  */
 public class HashThread extends Thread {
 	
-	String hashedText;
-	
 	byte[] digestedMessageBytes;
 	
 	BigInteger bigInt;
@@ -26,11 +21,9 @@ public class HashThread extends Thread {
 	
 	MessageDigest messageDigest = null;
 	
-	private PrintWriter pw;
-	
 	long startTime;
-	
-	static final ArrayList<String> hashedTextList = new ArrayList<String>();
+
+	int wordsMade;
 	
 	public HashThread() {
 	
@@ -43,11 +36,6 @@ public class HashThread extends Thread {
 	@Override
 	public void run() {
 	
-		try {
-			pw = new PrintWriter(new FileWriter(new File("HashList.txt"), true));
-		} catch (Exception e) {
-		}
-		
 		try {
 			
 			messageDigest = MessageDigest.getInstance("MD5");
@@ -99,20 +87,18 @@ public class HashThread extends Thread {
 					finalHashedText = "0" + finalHashedText;
 				}
 				
-				hashedText = string + " " + finalHashedText;
-				
-				pw.println(hashedText);
-				
+				RainbowTable.getFileHandle().print(org.apache.commons.lang3.StringEscapeUtils.escapeHtml4(string) + " " + finalHashedText);
+				wordsMade++;
 			}
-			
-			pw.flush();
 			
 		} while (!RainbowTable.isDone() || QueueClass.hasContent());
 		
 		BruteForce.setStartedThread(false);
 		
 		long time = System.nanoTime() - startTime;
-		System.out.printf("Took %.3f seconds to hash and print %,d combinations%n", time / 1e9, BruteForce.wordsMade);
+		System.out.printf("Took %.3f seconds to hash %,d combinations%n", time / 1e9, wordsMade);
+		
+		BruteForce.removeThread();
 		
 	}
 	

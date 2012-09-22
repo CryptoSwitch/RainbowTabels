@@ -2,7 +2,7 @@ package com.gravypod.RainbowTabel;
 
 import java.util.Arrays;
 
-public class MakeWords implements Runnable {
+public class MakeWords extends Thread {
 	
 	int charLen, wordsMade = 0;
 	
