@@ -1,8 +1,11 @@
 #/bin/bash
 cd /home/gravypod/test
+
+#split raw output into manageable files
 split --verbose -l 1000000 HashList.txt output/Hashes_4
 
 cd /home/gravypod/test/output
+#read new files into array
 declare -a files=`ls Hashes_*`
 
 for file in $files
