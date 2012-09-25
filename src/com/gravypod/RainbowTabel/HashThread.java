@@ -13,6 +13,12 @@ import java.util.ArrayList;
  */
 public class HashThread extends Thread {
 	
+	String quote = "\"";
+	
+	String singleQote = "\'";
+	
+	String altQuote = "`";
+	
 	byte[] digestedMessageBytes;
 	
 	BigInteger bigInt;
@@ -60,47 +66,71 @@ public class HashThread extends Thread {
 			
 			while (!QueueClass.hasContent());
 			
-			ArrayList<String> text;
+			ArrayList<String> text = getText();
 			
-			try {
-				text = QueueClass.take();
-			} catch (InterruptedException e) {
-				text = QueueClass.take();
+			if (text == null) {
+				
+				BruteForce.removeThread();
+				return;
+				
 			}
-			
-			if (text == null)
-				startHash();
 			
 			for (String string : text) {
 				
-				messageDigest.reset();
-				
-				messageDigest.update(string.getBytes());
-				
-				digestedMessageBytes = messageDigest.digest();
-				
-				bigInt = new BigInteger(1, digestedMessageBytes);
-				
-				finalHashedText = bigInt.toString(16);
-				
-				while (finalHashedText.length() < 32) {
-					finalHashedText = "0" + finalHashedText;
-				}
-				
-				RainbowTable.getFileHandle().print(string + " " + finalHashedText);
+				RainbowTable.getFileHandle().print(clean(string) + " " + md5(string));
 				wordsMade++;
 				
 			}
 			
 		} while (!RainbowTable.isDone() || QueueClass.hasContent());
 		
-		BruteForce.setStartedThread(false);
-		
 		long time = System.nanoTime() - startTime;
 		System.out.printf("Took %.3f seconds to hash %,d combinations%n", time / 1e9, wordsMade);
 		
+		if (wordsMade > 2000) {
+			wordsMade = 0;
+			startTime = System.nanoTime();
+			startHash();
+			return;
+		}
+		
 		BruteForce.removeThread();
 		
+	}
+	
+	public String md5(String string) {
+	
+		messageDigest.reset();
+		
+		messageDigest.update(string.getBytes());
+		
+		digestedMessageBytes = messageDigest.digest();
+		
+		bigInt = new BigInteger(1, digestedMessageBytes);
+		
+		finalHashedText = bigInt.toString(16);
+		
+		while (finalHashedText.length() < 32) {
+			finalHashedText = "0" + finalHashedText;
+		}
+		
+		return finalHashedText;
+		
+	}
+	
+	private ArrayList<String> getText() {
+	
+		try {
+			return QueueClass.take();
+		} catch (InterruptedException e) {
+			return getText();
+		}
+		
+	}
+	
+	public String clean(String s) {
+	
+		return s.replace(quote, "&quot;").replace(singleQote, "&apos;").replace(altQuote, "&#096;").replace("(", "&lpar;").replace(")", "&rpar;").replace("´", "&acute;").replace("\\", "&#92;");
 	}
 	
 }

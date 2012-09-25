@@ -9,8 +9,6 @@ package com.gravypod.RainbowTabel;
  */
 public class BruteForce {
 	
-	static boolean startedThread = false;
-	
 	static int threadsMade = 0;
 	
 	public static int wordsMade = 0;
@@ -37,7 +35,9 @@ public class BruteForce {
 			RainbowTable.setDone(false);
 			
 			if (startFrom == null || (startFrom.length() <= charLen))
-				new MakeWords(charLen, (charLen < max ? true : false), startFrom).start();
+				MakeWords.run(charLen, (charLen < max ? true : false), startFrom);
+			
+			RainbowTable.setDone(true);
 			
 		}
 		
@@ -53,10 +53,9 @@ public class BruteForce {
 	
 		QueueClass.put(s);
 		
-		if ((QueueClass.strings.size() >= 800) && !(threadsMade > 20)) {
+		if ((QueueClass.strings.size() >= 800) && !(threadsMade > 30)) {
 			RainbowTable.startHashing();
 			++threadsMade;
-			startedThread = true;
 		}
 		
 	}
@@ -79,14 +78,5 @@ public class BruteForce {
 		
 	}
 	
-	/**
-	 * Set if we need to create a new thread.
-	 * 
-	 * @param startedThread
-	 */
-	public static void setStartedThread(boolean startedThread) {
-	
-		BruteForce.startedThread = startedThread;
-	}
 	
 }

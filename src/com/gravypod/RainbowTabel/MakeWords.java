@@ -2,26 +2,19 @@ package com.gravypod.RainbowTabel;
 
 import java.util.Arrays;
 
-public class MakeWords extends Thread {
+public class MakeWords {
 	
-	int charLen, wordsMade = 0;
+	static int charLen, wordsMade = 0;
 	
-	long start = System.nanoTime();
+	static long start = System.nanoTime();
 	
-	char[] guess;
+	static char[] guess;
 	
-	boolean runFull = true;
+	static boolean runFull = true;
 	
-	boolean isLast;
+	static boolean isLast;
 	
-	/**
-	 * Create words of a given length
-	 * 
-	 * @param _charLen
-	 * @param _isLast
-	 * @param startFrom 
-	 */
-	public MakeWords(int _charLen, boolean _isLast, String startFrom) {
+	public static void run(int _charLen, boolean _isLast, String startFrom) {
 	
 		charLen = _charLen;
 		isLast = _isLast;
@@ -30,11 +23,6 @@ public class MakeWords extends Thread {
 			runFull = false;
 			guess = startFrom.toCharArray();
 		}
-		
-	}
-	
-	@Override
-	public void run() {
 		
 		if (runFull) {
 			
