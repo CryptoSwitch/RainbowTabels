@@ -13,8 +13,10 @@ for file in $files
 do
 echo [`date +%H:%M`] Starting $file...
 
+#create MySQL Tables
   mysql -u mysql_user -p'mysql_pass' rainbowtables -e "CREATE TABLE IF NOT EXISTS $file (pass VARCHAR(300), hash VARCHAR(40), UNIQUE (hash))";
 
+#Import MySQL Data
   mysqlimport -u mysql_user -p"mysql_pass" rainbowtables $file --fields-terminated-by=' ' --lines-terminated-by='\n' --local
 
 cat > $file << EOF
