@@ -8,6 +8,7 @@ cd /home/gravypod/test/output
 #read new files into array
 declare -a files=`ls Hashes_*`
 
+#loop the array
 for file in $files
 do
 echo [`date +%H:%M`] Starting $file...
