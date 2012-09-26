@@ -15,6 +15,7 @@ foreach ($list as $filename) { //Loop for each file
     }
   shell_exec("mv $filename $fn"); //Rename not yet entered filename to entered filename
   echo "Renaming $filename to $fn\n"; //Report renaming activity
+  $n = ++$n; //Advance suffix
   }
 }
 ?>
