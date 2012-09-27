@@ -1,13 +1,13 @@
 #/bin/bash
 
-read -p "File to read? (Use full path): " input
+read -p "File to read? (Use full path, probably /home/gravypod/HashList.txt): " input
 
-cd /home/gravypod
 split --verbose -a 5 -l 1000000 $input /home/gravypod/test/output/Hashes_pre_entry_
+
+cd /home/gravypod/test/output
 
 php input.php
 
-cd /home/gravypod/test/output
 declare -a files=`ls Hashes_*`
 
 for file in $files
